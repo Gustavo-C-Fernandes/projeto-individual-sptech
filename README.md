@@ -14,13 +14,11 @@ O Ninho dos Dragões é um site informativo sobre o universo do filme *Como Trei
 ## 🛠️ Tecnologias utilizadas
 HTML, CSS, JavaScript, Node.js, MySQL, Web Data Viz, Figma e Trello
 
-## ▶️ Como rodar
-(escreva aqui os passos que você usa para rodar o projeto)
 
 ## 🔗 Links
 * [Documentação do projeto](docs/documentacao-projeto-individual.pdf)
-* Protótipo no Figma: (link)
-* Trello: (link)
+* Protótipo no Figma: (https://www.figma.com/proto/XQaglCf15mSeUh2qjtw3UZ?node-id=0-1&t=kRcJUUJaRb5kNsqB-6)
+* Trello: (https://trello.com/invite/b/6a8de788c60b9685b14e3aee/ATTI49b463f9b6770f004c36b684bff2cb04D83C61FA/projeto-individual)
 
 ---
 Feito com 💻 por [Gustavo Cerqueira Fernandes](https://github.com/Gustavo-C-Fernandes).
