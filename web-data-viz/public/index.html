@@ -1,81 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>AquaTech | Página Inicial</title>
-
-    <script src="./js/sessao.js"></script>
-
-    <link rel="stylesheet" href="./css/estilo.css">
-    <link rel="icon" href="./assets/icon/favicon2.ico">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <title>Ninho dos Dragões</title>
+    <link rel="stylesheet" href="estilos.css">
 </head>
-
 <body>
-    <div class="header">
-      <div class="container">
-        <h1 class="titulo">AquaTech</h1>
-        <ul class="navbar">
-          <li class="agora">
-            <a href="#">Inicial</a>
-          </li>
-          <li>
-            <a href="simulador.html">Simulador</a>
-          </li>
-          <li>|</li>
-          <li>
-            <a href="login.html">Login</a>
-          </li>
-          <li>
-            <a href="cadastro.html">Cadastro</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  
-    <div class="banner">
-      <div class="container">
-        <p>Preservando <span>hoje</span> para existirem <span>amanhã</span>.</p>
-      </div>
-    </div>
-  
-    <div class="social">
-      <div class="container">
-        <div class="boxes">
-          <div class="box">
-            <img src="assets/imgs/planet-earth_color.png">
-            <h4>Missão</h4>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Et, quas cupiditate asperiores provident magnam
-              vitae illum iusto fugiat atque deleniti nulla sed iure suscipit, laborum, aliquid accusantium cum dicta
-              minima.</p>
-          </div>
-          <div class="box">
-            <img src="assets/imgs/lightbulb_color.png">
-            <h4>Visão</h4>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Et, quas cupiditate asperiores provident magnam
-              vitae illum iusto fugiat atque deleniti nulla sed iure suscipit, laborum, aliquid accusantium cum dicta
-              minima.</p>
-          </div>
-          <div class="box">
-            <img src="assets/imgs/growth_color.png">
-            <h4>Valores</h4>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Et, quas cupiditate asperiores provident magnam
-              vitae illum iusto fugiat atque deleniti nulla sed iure suscipit, laborum, aliquid accusantium cum dicta
-              minima.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  
-    <div class="footer">
-      <div class="container">
-        <h4>Feito com amor por aluno &hearts; SPTech &copy; 2023-2026</h4>
-      </div>
-    </div>
-  </body>
 
+    <header>
+        <div class="header-left">
+            <img class="header-logo" src="imgs/logo-ninho-dos-dragoes-v3.svg" alt="Logo Ninho dos Dragões">
+        </div>
+        
+        <nav>
+            <ul>
+                <li><a href="#" class="active">Home</a></li>
+                <li><a href="conteudo.html">Conteúdo</a></li>
+                <li><a href="quiz.html">Quiz</a></li>
+                <li><a href="sobre.html">Sobre</a></li>
+                <li><a href="cadastro.html">Cadastro</a></li>
+            </ul>
+        </nav>
+
+        <a href="login.html" class="login-link">
+            <img src="imgs/icone-perfil-dourado.svg" alt="Perfil" class="header-login">
+        </a>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Bem-vindos ao ninho dos<br>dragões</h1>
+            <p class="subtitle">Aprenda sobre o universo de Como Treinar o Seu Dragão e descubra que tipo de fã você é.</p>
+            <a href="quiz.html" class="comecar-quiz">Começar o quiz</a>
+        </section>
+
+        <section class="cards">
+            <div>
+                <h4>Conteúdo</h4>
+                <p>Dragões, personagens, Filmes e Séries.</p>
+            </div>
+            <div>
+                <h4>Quiz</h4>
+                <p>Teste o que você sabe.</p>
+            </div>
+            <div>
+                <h4>Dashboard</h4>
+                <p>Veja seus acertos e erros.</p>
+            </div>
+        </section>
+    </main>
+
+</body>
 </html>

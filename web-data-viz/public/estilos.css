@@ -1,0 +1,349 @@
+/* Configurações Globais */
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+   
+}
+
+body {
+    background-color: #0d0d0d;
+}
+
+/* --- HEADER --- */
+header {
+    background: linear-gradient(180deg, #A81313, #4A0303);
+
+    width: 100%;
+    height: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+}
+
+.header-logo {
+    height: 55px;
+    width: auto;
+}
+
+.header-login {
+    height: 40px;
+    width: auto;
+}
+
+/* Menu de Navegação */
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 25px;
+}
+
+nav a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+/* --- CONTEÚDO PRINCIPAL (MAIN) --- */
+main {
+    padding: 50px 80px;
+    /* Cria a margem nas laterais para alinhar tudo na esquerda */
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Textos Principais */
+h1 {
+    font-size: 2.5rem;
+    color: #ffffff;
+    line-height: 1.2;
+    margin-bottom: 20px;
+}
+
+.subtitle {
+    color: #cccccc;
+    font-size: 1.2rem;
+    width: 600px;
+    /* Limita a largura igual à foto */
+    line-height: 1.5;
+    margin-bottom: 35px;
+}
+
+/* Botão Vermelho com Gradiente */
+.comecar-quiz {
+    display: inline-block;
+    background: linear-gradient(180deg, #C90000, #5A0000);
+    /* Gradiente escuro do botão */
+    color: #ffffff;
+    text-decoration: none;
+    padding: 15px 30px;
+    border-radius: 8px;
+    /* Cantos levemente arredondados */
+    font-size: 1.1rem;
+    font-weight: bold;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+}
+
+.comecar-quiz:hover {
+    transform: scale(1.02);
+    /* Efeito sutil ao passar o mouse */
+}
+
+/* --- SEÇÃO DOS CARDS --- */
+.cards {
+    display: flex;
+    gap: 24px;
+    /* Define a distância exata entre eles para não sumirem da tela */
+    margin-top: 60px;
+}
+
+/* Cada um dos 3 Cards */
+.cards>div {
+    border: 1px solid #3a3a3a;
+    /* Borda fina cinza igual à da referência */
+    border-radius: 16px;
+    /* Cantos bem arredondados */
+    padding: 25px;
+    width: 260px;
+    /* Largura ideal para não ficarem esticados */
+    height: 160px;
+    /* Altura para formar o retângulo da imagem */
+    background-color: #1a1a1a;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    /* Alinha os textos no topo do card */
+    text-align: left;
+    /* Garante o texto alinhado à esquerda */
+}
+
+.cards h4 {
+    font-size: 1.4rem;
+    color: #ffffff;
+    margin-bottom: 12px;
+}
+
+.cards p {
+    color: #bbbbbb;
+    font-size: 1rem;
+    line-height: 1.4;
+}
+
+/* Cor de destaque para a página onde o usuário está navegando */
+nav a.active {
+    color: #FF0004;
+    /* Vermelho destacado do seu tema */
+    font-weight: bold;
+}
+
+/* --- PÁGINA DE CONTEÚDO --- */
+.secao-conteudo {
+    margin-top: 50px;
+}
+
+.secao-conteudo h2 {
+    font-size: 2rem;
+    color: #A81313;
+    margin-bottom: 20px;
+}
+
+.secao-conteudo h3 {
+    font-size: 1.4rem;
+    color: #ffffff;
+    margin-bottom: 10px;
+}
+
+/* Cada dragão: imagem de um lado e texto do outro */
+.conteudo-flex {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 30px;
+     padding: 20px;
+    background-color: #1a1a1a;
+    border: 1px solid #3a3a3a;
+    border-radius: 16px;
+}
+
+/* Todas as imagens com a mesma caixa */
+.conteudo-flex img {
+    width: 250px;
+    height: 250px;
+    object-fit: contain;     /* mostra o dragão inteiro, sem esticar */
+    flex-shrink: 0;          /* o flex não espreme a imagem */
+    background-color: #111111;
+    border-radius: 8px;
+}
+
+.conteudo-flex p {
+    line-height: 1.5;
+    margin-bottom: 6px;
+    color: #ffffff;
+}
+
+/* Botões de assuntos (Dragões, Personagens, Filmes e séries) */
+.botoes-temas {
+    display: flex;
+    gap: 12px;
+    margin: 25px 0;
+}
+
+.botoes-temas a {
+    background: linear-gradient(180deg, #C90000, #5A0000);
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+.conteudo-flex img {
+    border-radius: 8px;     
+}
+
+/* ======= cadastro ========= */
+/* --- PÁGINA DE CADASTRO --- */
+.cadastro {
+    max-width: 420px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: #1a1a1a;
+    border: 1px solid #3a3a3a;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.cadastro h2 {
+    color: #ffffff;
+    font-size: 2rem;
+    margin-bottom: 12px;
+}
+
+.cadastro label {
+    color: #f2f2f2;
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+.cadastro input {
+    width: 100%;
+    padding: 12px;
+    background-color: #0d0d0d;
+    color: #ffffff;
+    border: 1px solid #3a3a3a;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+.cadastro input:focus {
+    outline: none;
+    border-color: #FF0004;
+}
+
+#mensagem {
+    color: #FF4d4d;
+    min-height: 20px;
+    margin-top: 8px;
+}
+
+.botao-cadastrar {
+    margin-top: 12px;
+    padding: 14px;
+    background: linear-gradient(180deg, #C90000, #5A0000);
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.botao-cadastrar:hover {
+    transform: scale(1.02);
+}
+
+.link-login {
+    color: #bbbbbb;
+    text-align: center;
+    margin-top: 8px;
+}
+
+.link-login a {
+    color: #FF0004;
+}
+
+/* ========= login ========== */
+
+.login {
+     max-width: 420px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: #1a1a1a;
+    border: 1px solid #3a3a3a;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.login p {
+    color: #f2f2f2;
+}
+
+.login h2{
+    color: #f2f2f2;
+}
+
+.login label{
+   color: #f2f2f2;
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+.login input {
+    width: 100%;
+    padding: 12px;
+    background-color: #0d0d0d;
+    color: #ffffff;
+    border: 1px solid #3a3a3a;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+.login input:focus {
+    outline: none;
+    border-color: #FF0004;
+}
+/* ========= SOBRE ========== */
+
+/* Cada bloco da página vira um cartão escuro */
+.sobre .secao-conteudo {
+    margin-top: 24px;
+    padding: 24px;
+    background-color: #1a1a1a;
+    border: 1px solid #3a3a3a;
+    border-radius: 16px;
+}
+
+.sobre .secao-conteudo h2 {
+    color: #FF0004;
+    font-size: 1.6rem;
+    margin-bottom: 12px;
+}
+
+.sobre .secao-conteudo p {
+    color: #e0e0e0;
+    line-height: 1.6;
+}
+
+/* Aviso de direitos no final */
+.aviso {
+    margin-top: 40px;
+    font-size: 0.9rem;
+    color: #888888;
+}
