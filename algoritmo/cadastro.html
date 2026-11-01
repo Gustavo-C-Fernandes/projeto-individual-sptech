@@ -1,31 +1,57 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ninho dos Dragões</title>
+    <title>Cadastro - Ninho dos Dragões</title>
     <link rel="stylesheet" href="estilos.css">
 </head>
+
 <body>
-     <header>
+    <header>
         <div class="header-left">
-            <img class="header-logo" src="../algoritmo/imgs/logo-ninho-dos-dragoes-v3.svg" alt="Logo Ninho dos Dragões">
+            <img class="header-logo" src="imgs/logo-ninho-dos-dragoes-v3.svg" alt="Logo Ninho dos Dragões">
         </div>
-        
+
         <nav>
             <ul>
-                <li><a href="index.html">home</a></li>
+                <li><a href="index.html">Home</a></li>
                 <li><a href="conteudo.html">Conteúdo</a></li>
                 <li><a href="quiz.html">Quiz</a></li>
-                <li><a href="sobre.html">sobre</a></li>
-                <li><a href="#" class="active">cadastro</a></li>
+                <li><a href="sobre.html">Sobre</a></li>
+                <li><a href="#" class="active">Cadastro</a></li>
             </ul>
         </nav>
 
         <a href="login.html" class="login-link">
-            <img src="../algoritmo/imgs/icone-perfil-dourado.svg" alt="Perfil" class="header-login">
+            <img src="imgs/icone-perfil-dourado.svg" alt="Perfil" class="header-login">
         </a>
     </header>
 
+    <main>
+        <div class="cadastro">
+            <h2>Cadastro</h2>
+
+            <label for="nome">Nome</label>
+            <input type="text" id="nome" placeholder="Digite seu nome">
+
+            <label for="email">E-mail</label>
+            <input type="email" id="email" placeholder="Digite seu e-mail">
+
+            <label for="senha">Senha</label>
+            <input type="password" id="senha" placeholder="Digite sua senha">
+
+            <label for="confirmacaoSenha">Confirmar senha</label>
+            <input type="password" id="confirmacaoSenha" placeholder="Digite a senha novamente">
+
+            <div id="mensagem"></div>
+
+            <button class="botao-cadastrar" onclick="cadastrar()">Cadastrar</button>
+
+            <p class="link-login">Já tem conta? <a href="login.html">Entrar</a></p>
+        </div>
+    </main>
 </body>
+
 </html>
