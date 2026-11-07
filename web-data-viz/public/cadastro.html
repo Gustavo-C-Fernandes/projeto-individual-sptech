@@ -45,13 +45,59 @@
             <label for="confirmacaoSenha">Confirmar senha</label>
             <input type="password" id="confirmacaoSenha" placeholder="Digite a senha novamente">
 
-            <div id="mensagem"></div>
+            <div id="msg"></div>
 
             <button class="botao-cadastrar" onclick="cadastrar()">Cadastrar</button>
 
             <p class="link-login">Já tem conta? <a href="login.html">Entrar</a></p>
+            <span style="color: red;"></span>
         </div>
     </main>
+
+    <script>
+       function cadastrar() {
+    let nomeUser = nome.value.trim()
+    let emailUser = email.value.trim()
+    let senhaUser = senha.value.trim()
+    let senhaUserConfimada = confirmacaoSenha.value.trim()
+
+    msg.innerHTML = ""
+
+    // conta os @, guarda a posição do @ e a do último ponto
+    let qtdArroba = 0
+    let posArroba = -1
+    let posPonto = -1
+    for (let i = 0; i < emailUser.length; i++) {
+        if (emailUser[i] === "@") {
+            qtdArroba++
+            posArroba = i
+        }
+        if (emailUser[i] === ".") {
+            posPonto = i
+        }
+    }
+
+    if (nomeUser === "" || emailUser === "" || senhaUser === "" || senhaUserConfimada === "") {
+        msg.innerHTML = "Preencha todos os campos"
+    } else if (qtdArroba !== 1) {
+        msg.innerHTML = "O e-mail precisa ter um @"
+    } else if (posArroba === 0) {
+        msg.innerHTML = "Falta algo antes do @"
+    } else if (posPonto < posArroba + 2) {
+        msg.innerHTML = "Falta o ponto depois do domínio (ex: gmail.com)"
+    } else if (posPonto === emailUser.length - 1) {
+        msg.innerHTML = "Falta algo depois do ponto"
+    } else if (senhaUser !== senhaUserConfimada) {
+        msg.innerHTML = "As senhas não coincidem"
+    } else {
+        // mock: guarda os dados no navegador e vai para o login
+        localStorage.setItem("nome", nomeUser)
+        localStorage.setItem("email", emailUser)
+        localStorage.setItem("senha", senhaUser)
+        window.location.href = "login.html"
+    }
+}
+    </script>
 </body>
 
 </html>

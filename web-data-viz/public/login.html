@@ -48,4 +48,52 @@
     </main>
 </body>
 
-</html>'    '
+</html>
+<script>
+    function entrar() {
+
+        let emailUser = email.value.trim()
+        let senhaUser = senha.value.trim()
+
+        mensagem.innerHTML = ""
+
+        // lê o que foi guardado no cadastro (null se ninguém se cadastrou)
+        let emailSalvo = localStorage.getItem("email")
+        let senhaSalva = localStorage.getItem("senha")
+
+        // mesmo for do cadastro: conta os @ e guarda a posição do @ e do último ponto
+        let qtdArroba = 0
+        let posArroba = -1
+        let posPonto = -1
+        for (let i = 0; i < emailUser.length; i++) {
+            if (emailUser[i] === "@") {
+                qtdArroba++
+                posArroba = i
+            }
+            if (emailUser[i] === ".") {
+                posPonto = i
+            }
+        }
+
+        if (emailUser === "" || senhaUser === "") {
+            mensagem.innerHTML = `<span style="color: #FF4d4d;">Preencha todos os campos</span>`
+        } else if (qtdArroba !== 1) {
+            mensagem.innerHTML = `<span style="color: #FF4d4d;">O e-mail precisa ter um @</span>`
+        } else if (posArroba === 0) {
+            mensagem.innerHTML = `<span style="color: #FF4d4d;">Falta algo antes do @</span>`
+        } else if (posPonto < posArroba + 2) {
+            mensagem.innerHTML = `<span style="color: #FF4d4d;">Falta o ponto depois do domínio (ex: gmail.com)</span>`
+        } else if (posPonto === emailUser.length - 1) {
+            mensagem.innerHTML = `<span style="color: #FF4d4d;">Falta algo depois do ponto</span>`
+        } else if (emailSalvo === null) {
+            mensagem.innerHTML = `<span style="color: #FF4d4d;">Nenhum cadastro encontrado. Cadastre-se primeiro</span>`
+
+        } else if (emailUser !== emailSalvo) {
+            mensagem.innerHTML = `<span style="color: #FF4d4d;">E-mail incorreto</span>`
+        } else if (senhaUser !== senhaSalva) {
+            mensagem.innerHTML = `<span style="color: #FF4d4d;">Senha incorreta</span>`
+        } else {
+            window.location.href = "dashboard.html"
+        }
+    }
+</script>
