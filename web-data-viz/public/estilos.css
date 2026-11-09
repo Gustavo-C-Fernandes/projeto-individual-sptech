@@ -347,3 +347,84 @@ nav a.active {
     font-size: 0.9rem;
     color: #888888;
 }
+
+/* ========= DASHBOARD ========== */
+
+.intencao {
+    color: #f2f2f2;
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+}
+
+.bloco {
+    background-color: #1a1a1a;
+    border: 1px solid #3a3a3a;
+    border-radius: 16px;
+    padding: 24px;
+}
+
+.bloco h3 {
+    color: #ffffff;
+    font-size: 1.3rem;
+    margin-bottom: 16px;
+}
+
+.bloco-destaque {
+    margin-bottom: 24px;
+    border-color: #E0B04A;
+}
+
+.linha-blocos {
+    display: flex;
+    gap: 24px;
+}
+
+.linha-blocos .bloco {
+    flex: 1;
+    min-width: 0;
+}
+
+.kpis {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    margin-bottom: 20px;
+}
+
+.kpi {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.kpi-rotulo {
+    color: #f2f2f2;
+    font-size: 0.95rem;
+}
+
+.kpi-valor {
+    color: #ffffff;
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+.kpi-destaque .kpi-valor {
+    color: #E0B04A;
+    font-size: 2.6rem;
+}
+
+.kpi-legenda {
+    color: #bbbbbb;
+    font-size: 0.85rem;
+}
+
+.grafico-box {
+    position: relative;
+    height: 260px;
+}
+
+@media (max-width: 800px) {
+    .linha-blocos {
+        flex-direction: column;
+    }
+}

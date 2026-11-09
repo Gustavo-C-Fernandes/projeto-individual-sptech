@@ -1,25 +1,29 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ninho dos Dragões</title>
+    <title>Seu progresso - Ninho dos Dragões</title>
     <link rel="stylesheet" href="estilos.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
 </head>
+
 <body>
 
     <header>
         <div class="header-left">
             <img class="header-logo" src="imgs/logo-ninho-dos-dragoes-v3.svg" alt="Logo Ninho dos Dragões">
         </div>
-        
+
         <nav>
             <ul>
-                <li><a href="index.html" class="active">home</a></li>
+                <li><a href="index.html">Home</a></li>
                 <li><a href="conteudo.html">Conteúdo</a></li>
                 <li><a href="quiz.html">Quiz</a></li>
-                <li><a href="sobre.html">sobre</a></li>
-                <li><a href="cadastro.html">cadastro</a></li>
+                <li><a href="dashboard.html" class="active">Dashboard</a></li>
+                <li><a href="sobre.html">Sobre</a></li>
+                <li><a href="cadastro.html">Cadastro</a></li>
             </ul>
         </nav>
 
@@ -27,6 +31,211 @@
             <img src="imgs/icone-perfil-dourado.svg" alt="Perfil" class="header-login">
         </a>
     </header>
-    
+
+    <main>
+        <h1>Seu progresso como domador de dragões</h1>
+        <p class="intencao">Mostra em qual nível de domador de dragões você está, se está evoluindo a cada tentativa e
+            como é o seu desempenho geral no quiz.</p>
+        <p id="mensagemVazia" class="intencao"></p>
+
+        <div id="painel">
+
+            <!-- Bloco 1: o mais importante, em cima e à esquerda -->
+            <div class="bloco bloco-destaque">
+                <h3>Sua última tentativa</h3>
+                <div class="kpis">
+                    <div class="kpi kpi-destaque">
+                        <span class="kpi-rotulo">Classificação</span>
+                        <span class="kpi-valor" id="valorClassificacao">-</span>
+                        <span class="kpi-legenda">Iniciante: abaixo de 50% · Intermediário: 50% a 99% · Mestre dos
+                            Dragões: 100%</span>
+                    </div>
+                    <div class="kpi">
+                        <span class="kpi-rotulo">Acertos</span>
+                        <span class="kpi-valor" id="valorAcertos">-</span>
+                        <span class="kpi-legenda">meta: 100% (Mestre dos Dragões)</span>
+                    </div>
+                </div>
+                <a href="quiz.html" class="comecar-quiz">Fazer outro quiz</a>
+            </div>
+
+            <div class="linha-blocos">
+
+                <!-- Bloco 2: evolução (KPI ao lado do gráfico que o explica) -->
+                <div class="bloco">
+                    <h3>Você está evoluindo?</h3>
+                    <div class="kpis">
+                        <div class="kpi">
+                            <span class="kpi-rotulo">Variação nos acertos</span>
+                            <span class="kpi-valor" id="valorEvolucao">-</span>
+                            <span class="kpi-legenda">última tentativa contra a anterior</span>
+                        </div>
+                    </div>
+                    <div class="grafico-box">
+                        <canvas id="grafico"></canvas>
+                    </div>
+                </div>
+
+                <!-- Bloco 3: desempenho geral -->
+                <div class="bloco">
+                    <h3>Seu desempenho geral</h3>
+                    <div class="kpis">
+                        <div class="kpi">
+                            <span class="kpi-rotulo">Média geral</span>
+                            <span class="kpi-valor" id="valorMedia">-</span>
+                            <span class="kpi-legenda">50% = nível Intermediário</span>
+                        </div>
+                        <div class="kpi">
+                            <span class="kpi-rotulo">Tentativas</span>
+                            <span class="kpi-valor" id="valorTentativas">-</span>
+                            <span class="kpi-legenda">quizzes feitos</span>
+                        </div>
+                    </div>
+                    <div class="grafico-box">
+                        <canvas id="graficoPizza"></canvas>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // 1. Valores de teste (depois virão do banco)
+        let historico = [4, 6, 8]     // acertos de cada tentativa, da mais antiga para a mais recente
+        let totalPerguntas = 10       // quantas perguntas tem o quiz
+
+        // 2. Sem nenhuma tentativa: avisa e esconde o painel
+        if (historico.length === 0) {
+            painel.style.display = "none"
+            mensagemVazia.innerHTML = `Você ainda não fez nenhum quiz. <a href="quiz.html">Fazer o primeiro quiz</a>`
+        } else {
+
+            // 3. Última tentativa
+            let acertos = historico[historico.length - 1]
+            let percentual = Math.round(acertos / totalPerguntas * 100)
+
+            // 4. Classificação (baseada na última tentativa)
+            let classificacao = ""
+
+            if (percentual === 100) {
+                classificacao = "Mestre dos Dragões"
+            } else if (percentual >= 50) {
+                classificacao = "Intermediário"
+            } else {
+                classificacao = "Iniciante"
+            }
+
+            // 5. Evolução: variação percentual entre as duas últimas tentativas
+            let textoEvolucao = "-"
+
+            if (historico.length > 1) {
+                let anterior = historico[historico.length - 2]
+
+                if (anterior > 0) {
+                    let variacao = Math.round((acertos - anterior) / anterior * 100)
+
+                    if (variacao > 0) {
+                        textoEvolucao = "▲ +" + variacao + "% (" + anterior + " → " + acertos + ")"
+                    } else if (variacao < 0) {
+                        textoEvolucao = "▼ " + variacao + "% (" + anterior + " → " + acertos + ")"
+                    } else {
+                        textoEvolucao = "= 0% (" + anterior + " → " + acertos + ")"
+                    }
+                } else {
+                    // anterior = 0: não dá para dividir por zero
+                    textoEvolucao = "0 → " + acertos + " acertos"
+                }
+            }
+
+            // 6. Soma de todas as tentativas (média geral e pizza)
+            let somaAcertos = 0
+
+            for (let i = 0; i < historico.length; i++) {
+                somaAcertos = somaAcertos + historico[i]
+            }
+
+            let totalRespondidas = totalPerguntas * historico.length
+            let somaErros = totalRespondidas - somaAcertos
+            let mediaGeral = Math.round(somaAcertos / totalRespondidas * 100)
+
+            // 7. Nomes das tentativas para o gráfico de linha
+            let nomesTentativas = []
+
+            for (let i = 0; i < historico.length; i++) {
+                nomesTentativas.push((i + 1) + "ª")
+            }
+
+            // 8. Mostra nos KPIs
+            valorClassificacao.innerHTML = classificacao
+            valorAcertos.innerHTML = acertos + " de " + totalPerguntas + " (" + percentual + "%)"
+            valorEvolucao.innerHTML = textoEvolucao
+            valorMedia.innerHTML = mediaGeral + "%"
+            valorTentativas.innerHTML = historico.length
+
+            // 9. Gráficos (dourado = acertos, cinza = erros)
+            Chart.defaults.color = "#f2f2f2"
+            Chart.defaults.borderColor = "#3a3a3a"
+
+            // Linha: acertos em cada tentativa (evolução no tempo)
+            new Chart(grafico, {
+                type: "line",
+                data: {
+                    labels: nomesTentativas,
+                    datasets: [{
+                        label: "Acertos",
+                        data: historico,
+                        borderColor: "#E0B04A",
+                        backgroundColor: "#E0B04A",
+                        tension: 0.3
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            min: 0,
+                            max: totalPerguntas,
+                            title: { display: true, text: "Acertos" }
+                        },
+                        x: {
+                            title: { display: true, text: "Tentativa" }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            })
+
+            // Pizza: acertos e erros de todas as tentativas
+            new Chart(graficoPizza, {
+                type: "pie",
+                data: {
+                    labels: ["Acertos: " + somaAcertos, "Erros: " + somaErros],
+                    datasets: [{
+                        data: [somaAcertos, somaErros],
+                        backgroundColor: ["#E0B04A", "#6b6b6b"],
+                        borderColor: "#1a1a1a",
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: "Acertos e erros em todas as tentativas (" + totalRespondidas + " perguntas)"
+                        },
+                        legend: {
+                            labels: { font: { size: 14 } }
+                        }
+                    }
+                }
+            })
+        }
+    </script>
+
 </body>
+
 </html>
