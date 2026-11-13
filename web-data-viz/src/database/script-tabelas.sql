@@ -6,53 +6,35 @@
 comandos para mysql server
 */
 
-CREATE DATABASE aquatech;
+show databases;
 
-USE aquatech;
+CREATE DATABASE ninho_dos_dragoes;
+USE ninho_dos_dragoes;
 
-CREATE TABLE empresa (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	razao_social VARCHAR(50),
-	cnpj CHAR(14),
-	codigo_ativacao VARCHAR(50)
-);
+
 
 CREATE TABLE usuario (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	nome VARCHAR(50),
-	email VARCHAR(50),
-	senha VARCHAR(50),
-	fk_empresa INT,
-	FOREIGN KEY (fk_empresa) REFERENCES empresa(id)
+    id_usuario INT NOT NULL AUTO_INCREMENT,
+    nome VARCHAR(45) NOT NULL,
+    email VARCHAR(45) NOT NULL,
+    senha VARCHAR(45) NOT NULL,
+    PRIMARY KEY (id_usuario),
+    UNIQUE KEY email (email)
 );
 
-CREATE TABLE aviso (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	titulo VARCHAR(100),
-	descricao VARCHAR(150),
-	fk_usuario INT,
-	FOREIGN KEY (fk_usuario) REFERENCES usuario(id)
+CREATE TABLE historico (
+    id_historico INT NOT NULL AUTO_INCREMENT,
+    fk_usuario INT NOT NULL,
+    qtd_acerto INT NOT NULL,
+    qtd_erro INT NOT NULL,
+    dt_historico DATETIME DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id_historico),
+    CONSTRAINT fk_historico_usuario FOREIGN KEY (fk_usuario) REFERENCES usuario (id_usuario),
+    CONSTRAINT chk_historico CHECK (qtd_acerto >= 0 AND qtd_erro >= 0)
 );
 
-create table aquario (
-/* em nossa regra de negócio, um aquario tem apenas um sensor */
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	descricao VARCHAR(300),
-	fk_empresa INT,
-	FOREIGN KEY (fk_empresa) REFERENCES empresa(id)
-);
+insert into usuario (nome, email, senha) values ('Teste', 'teste@teste.com', 'Teste@123');
 
-/* esta tabela deve estar de acordo com o que está em INSERT de sua API do arduino - dat-acqu-ino */
 
-create table medida (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	temperatura DECIMAL,
-	momento DATETIME,
-	fk_aquario INT,
-	FOREIGN KEY (fk_aquario) REFERENCES aquario(id)
-);
-
-insert into empresa (razao_social, codigo_ativacao) values ('Empresa 1', 'ED145B');
-insert into empresa (razao_social, codigo_ativacao) values ('Empresa 2', 'A1B2C3');
-insert into aquario (descricao, fk_empresa) values ('Aquário de Estrela-do-mar', 1);
-insert into aquario (descricao, fk_empresa) values ('Aquário de Peixe-dourado', 2);
+select * from usuario;
+select * from historico;
