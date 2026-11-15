@@ -5,7 +5,7 @@
     margin: 0;
     box-sizing: border-box;
     font-family: 'Arial', sans-serif;
-   
+
 }
 
 body {
@@ -164,7 +164,7 @@ nav a.active {
     align-items: center;
     gap: 24px;
     margin-bottom: 30px;
-     padding: 20px;
+    padding: 20px;
     background-color: #1a1a1a;
     border: 1px solid #3a3a3a;
     border-radius: 16px;
@@ -174,8 +174,10 @@ nav a.active {
 .conteudo-flex img {
     width: 250px;
     height: 250px;
-    object-fit: contain;     /* mostra o dragão inteiro, sem esticar */
-    flex-shrink: 0;          /* o flex não espreme a imagem */
+    object-fit: contain;
+    /* mostra o dragão inteiro, sem esticar */
+    flex-shrink: 0;
+    /* o flex não espreme a imagem */
     background-color: #111111;
     border-radius: 8px;
 }
@@ -200,8 +202,9 @@ nav a.active {
     border-radius: 8px;
     font-weight: bold;
 }
+
 .conteudo-flex img {
-    border-radius: 8px;     
+    border-radius: 8px;
 }
 
 /* ======= cadastro ========= */
@@ -280,7 +283,7 @@ nav a.active {
 /* ========= login ========== */
 
 .login {
-     max-width: 420px;
+    max-width: 420px;
     margin: 0 auto;
     padding: 30px;
     background-color: #1a1a1a;
@@ -295,12 +298,12 @@ nav a.active {
     color: #f2f2f2;
 }
 
-.login h2{
+.login h2 {
     color: #f2f2f2;
 }
 
-.login label{
-   color: #f2f2f2;
+.login label {
+    color: #f2f2f2;
     font-weight: bold;
     margin-top: 8px;
 }
@@ -319,6 +322,7 @@ nav a.active {
     outline: none;
     border-color: #FF0004;
 }
+
 /* ========= SOBRE ========== */
 
 /* Cada bloco da página vira um cartão escuro */
@@ -427,4 +431,157 @@ nav a.active {
     .linha-blocos {
         flex-direction: column;
     }
+}
+
+/* ===== QUIZ ===== */
+
+#btnIniciarQuiz {
+    display: block;
+    margin: 40px auto;
+    padding: 20px 64px;
+    background: #E0B04A;
+    color: #1a1a1a;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    cursor: pointer;
+}
+
+#btnIniciarQuiz:hover {
+    background: #f0c15a;
+}
+
+/* card do quiz, tudo em coluna */
+#jogo {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    max-width: 760px;
+    margin: 30px auto;
+    padding: 28px;
+    background: #1a1a1a;
+    border: 1px solid #3a3a3a;
+    border-radius: 12px;
+    gap: 10px;
+    box-sizing: border-box;
+}
+
+/* 1. número da questão, em cima */
+#infoQuestao {
+    color: #E0B04A;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* 2. enunciado */
+#perguntaDaQuestaoAtual {
+    color: #FFF3D6;
+    font-size: 1.5rem;
+    line-height: 1.4;
+}
+
+#infoAlternativas {
+    color: #E0B04A;
+    font-size: 0.95rem;
+}
+
+/* 3. alternativas, uma embaixo da outra */
+#opcoes {
+    flex-direction: column;
+    gap: 12px;
+}
+
+#opcoes span {
+    display: block;
+}
+
+#opcoes .radio {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+#opcoes .option {
+    display: block;
+    padding: 16px 18px;
+    background: #242424;
+    color: #FFFFFF;
+    font-size: 1.1rem;
+    border: 2px solid #3a3a3a;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+}
+
+#opcoes .radio:not(:disabled)+.option:hover {
+    border-color: #E0B04A;
+}
+
+#opcoes .radio:checked+.option {
+    border-color: #E0B04A;
+    background: rgba(224, 176, 74, 0.12);
+}
+
+/* certo e errado (classes colocadas pelo JavaScript) */
+#opcoes .radio+.option.text-success-with-bg {
+    border-color: #4caf50;
+    background: rgba(76, 175, 80, 0.18);
+}
+
+#opcoes .radio+.option.text-danger-with-bg {
+    border-color: #FF4d4d;
+    background: rgba(255, 77, 77, 0.15);
+}
+
+/* 4. botões maiores, lado a lado */
+#botoes {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 24px;
+}
+
+#botoes button {
+    flex: 1 1 220px;
+    margin: 0;
+    padding: 18px 20px;
+    background: #E0B04A;
+    color: #1a1a1a;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.15rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#botoes button:hover:not(:disabled) {
+    background: #f0c15a;
+}
+
+#botoes button:disabled {
+    background: #3a3a3a;
+    color: #6b6b6b;
+    cursor: not-allowed;
+}
+
+#btnTentarNovamente:not(:disabled) {
+    background: transparent;
+    color: #E0B04A;
+    border: 2px solid #E0B04A;
+}
+
+/* mensagem final */
+#areaResultado {
+    color: #FFF3D6;
+    text-align: center;
+    font-size: 1.15rem;
+}
+
+#areaResultado a {
+    color: #E0B04A;
+    font-weight: bold;
+    text-decoration: underline;
 }
