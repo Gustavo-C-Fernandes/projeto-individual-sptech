@@ -33,6 +33,7 @@
     </header>
 
     <main>
+        <h2 id="saudacao"></h2>
         <h1>Seu progresso como domador de dragões</h1>
         <p class="intencao">Mostra em qual nível de domador de dragões você está, se está evoluindo a cada tentativa e
             como é o seu desempenho geral no quiz.</p>
@@ -99,23 +100,52 @@
             </div>
         </div>
     </main>
+   <script>
+    let totalPerguntas = 10
 
-    <script>
-        // 1. Valores de teste (depois virão do banco)
-        let historico = [4, 6, 8]     // acertos de cada tentativa, da mais antiga para a mais recente
-        let totalPerguntas = 10       // quantas perguntas tem o quiz
+    if (sessionStorage.ID_USUARIO == undefined) {
+        window.location.href = "login.html"
+    } else {
+        saudacao.innerHTML = `<span style="color: #E0B04A;">Olá, ${sessionStorage.NOME_USUARIO}</span>`
 
-        // 2. Sem nenhuma tentativa: avisa e esconde o painel
+        fetch(`/historico/buscar/${sessionStorage.ID_USUARIO}`)
+            .then(function (resposta) {
+                return resposta.json()
+            })
+            .then(function (dados) {
+                let historico = []
+
+                for (let i = 0; i < dados.length; i++) {
+                    historico.push(dados[i].qtd_acerto)
+                }
+
+                // busca os KPIs calculados no banco (COUNT, SUM e AVG)
+                return fetch(`/historico/kpis/${sessionStorage.ID_USUARIO}`)
+                    .then(function (resposta) {
+                        return resposta.json()
+                    })
+                    .then(function (kpis) {
+                        montarDashboard(historico, kpis)
+                    })
+            })
+            .catch(function (erro) {
+                console.log(erro)
+            })
+    }
+
+    function montarDashboard(historico, kpis) {
+
+        // Sem nenhuma tentativa: avisa e esconde o painel
         if (historico.length === 0) {
             painel.style.display = "none"
             mensagemVazia.innerHTML = `Você ainda não fez nenhum quiz. <a href="quiz.html">Fazer o primeiro quiz</a>`
         } else {
 
-            // 3. Última tentativa
+            // Última tentativa
             let acertos = historico[historico.length - 1]
             let percentual = Math.round(acertos / totalPerguntas * 100)
 
-            // 4. Classificação (baseada na última tentativa)
+            // Classificação (baseada na última tentativa)
             let classificacao = ""
 
             if (percentual === 100) {
@@ -126,7 +156,7 @@
                 classificacao = "Iniciante"
             }
 
-            // 5. Evolução: variação percentual entre as duas últimas tentativas
+            // Evolução: variação percentual entre as duas últimas tentativas
             let textoEvolucao = "-"
 
             if (historico.length > 1) {
@@ -148,32 +178,27 @@
                 }
             }
 
-            // 6. Soma de todas as tentativas (média geral e pizza)
-            let somaAcertos = 0
+            // Valores que vieram prontos do banco (o SUM e o AVG chegam como texto)
+            let somaAcertos = Number(kpis.somaAcertos)
+            let somaErros = Number(kpis.somaErros)
+            let mediaGeral = Number(kpis.mediaGeral)
+            let tentativas = Number(kpis.tentativas)
 
-            for (let i = 0; i < historico.length; i++) {
-                somaAcertos = somaAcertos + historico[i]
-            }
-
-            let totalRespondidas = totalPerguntas * historico.length
-            let somaErros = totalRespondidas - somaAcertos
-            let mediaGeral = Math.round(somaAcertos / totalRespondidas * 100)
-
-            // 7. Nomes das tentativas para o gráfico de linha
+            // Nomes das tentativas para o gráfico de linha
             let nomesTentativas = []
 
             for (let i = 0; i < historico.length; i++) {
                 nomesTentativas.push((i + 1) + "ª")
             }
 
-            // 8. Mostra nos KPIs
+            // Mostra nos KPIs
             valorClassificacao.innerHTML = classificacao
             valorAcertos.innerHTML = acertos + " de " + totalPerguntas + " (" + percentual + "%)"
             valorEvolucao.innerHTML = textoEvolucao
             valorMedia.innerHTML = mediaGeral + "%"
-            valorTentativas.innerHTML = historico.length
+            valorTentativas.innerHTML = tentativas
 
-            // 9. Gráficos (dourado = acertos, cinza = erros)
+            // Gráficos (dourado = acertos, cinza = erros)
             Chart.defaults.color = "#f2f2f2"
             Chart.defaults.borderColor = "#3a3a3a"
 
@@ -225,7 +250,7 @@
                     plugins: {
                         title: {
                             display: true,
-                            text: "Acertos e erros em todas as tentativas (" + totalRespondidas + " perguntas)"
+                            text: "Acertos e erros em todas as tentativas (" + (somaAcertos + somaErros) + " perguntas)"
                         },
                         legend: {
                             labels: { font: { size: 14 } }
@@ -234,7 +259,8 @@
                 }
             })
         }
-    </script>
+    }
+</script>
 
 </body>
 
