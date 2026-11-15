@@ -1,22 +1,25 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ninho dos Dragões</title>
     <link rel="stylesheet" href="estilos.css">
 </head>
-<body>
-     <header>
+
+<body onload="onloadEsconder()">
+    <header>
         <div class="header-left">
             <img class="header-logo" src="imgs/logo-ninho-dos-dragoes-v3.svg" alt="Logo Ninho dos Dragões">
         </div>
-        
+
         <nav>
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="conteudo.html">Conteúdo</a></li>
                 <li><a href="#" class="active">Quiz</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
                 <li><a href="sobre.html">Sobre</a></li>
                 <li><a href="cadastro.html">Cadastro</a></li>
             </ul>
@@ -26,6 +29,330 @@
             <img src="imgs/icone-perfil-dourado.svg" alt="Perfil" class="header-login">
         </a>
     </header>
+    <main>
 
+        <button id="btnIniciarQuiz" onclick="iniciarQuiz()">INICIAR QUIZ</button>
+
+        <div id="jogo" class="width-fit-content flex-colunar border-secondary">
+
+            <div id="infoQuestao" class="padding-8">
+                <span>Questão atual: <span id="spanNumeroDaQuestaoAtual"></span> de <span id="qtdQuestoes"></span>
+                    questões.</span>
+            </div>
+
+            <div id="perguntaDaQuestaoAtual" class="padding-8">
+                <span id="spanQuestaoExibida" class="text-bold"></span>
+            </div>
+
+            <div id="infoAlternativas" class="padding-8">
+                <span><em>Escolha uma opção dentre as abaixo:</em></span>
+            </div>
+
+            <div id="opcoes" class="flex-colunar padding-8">
+                <span>
+                    <input type="radio" id="primeiraOpcao" name="option" class="radio" value="alternativaA" />
+                    <label for="primeiraOpcao" class="option" id="labelOpcaoUm"></label>
+                </span>
+                <span>
+                    <input type="radio" id="segundaOpcao" name="option" class="radio" value="alternativaB" />
+                    <label for="segundaOpcao" class="option" id="labelOpcaoDois"></label>
+                </span>
+                <span>
+                    <input type="radio" id="terceiraOpcao" name="option" class="radio" value="alternativaC" />
+                    <label for="terceiraOpcao" class="option" id="labelOpcaoTres"></label>
+                </span>
+                <span>
+                    <input type="radio" id="quartaOpcao" name="option" class="radio" value="alternativaD" />
+                    <label for="quartaOpcao" class="option" id="labelOpcaoQuatro"></label>
+                </span>
+            </div>
+
+            <div id="botoes" class="flex-colunar padding-8">
+                <button onclick="submeter()" id="btnSubmeter">Submeter resposta</button>
+                <button onclick="avancar()" id="btnProx" disabled>Avançar para próxima questão</button>
+                <!-- <button onclick="finalizar()" id="btnConcluir" disabled>Finalizar Quiz</button> -->
+                <button onclick="tentarNovamente()" id="btnTentarNovamente" style="display: none" disabled>Tentar
+                    novamente</button>
+
+            </div>
+            <div id="areaResultado" class="padding-8"></div>
+
+
+        </div>
+    </main>
 </body>
+<script>
+
+
+
+    const listaDeQuestoes = [
+
+        {
+            pergunta: "Quem é Valka?",
+            alternativaA: "A irmã mais velha da Astrid",
+            alternativaB: "A vilã do terceiro filme",
+            alternativaC: "A mãe do Soluço, que ele reencontra no segundo filme",
+            alternativaD: "Uma dragoa que vive em Berk",
+            alternativaCorreta: "alternativaC"
+        },
+
+        {
+            pergunta: "Como o Soluço derruba o Banguela no primeiro filme?",
+            alternativaA: "Com uma máquina que ele mesmo inventou",
+            alternativaB: "Com a espada do pai",
+            alternativaC: "Com uma armadilha de fogo",
+            alternativaD: "Com a ajuda dos amigos",
+            alternativaCorreta: "alternativaA"
+        },
+
+        {
+            pergunta: "Que tipo de dragão o Banguela conhece em \"O Mundo Secreto\"?",
+            alternativaA: "Morte Vermelha",
+            alternativaB: "Nadder Mortal",
+            alternativaC: "Gronckle",
+            alternativaD: "Fúria da Luz",
+            alternativaCorreta: "alternativaD"
+        },
+
+        {
+            pergunta: "Qual dragão gigante obriga os outros dragões a roubar comida de Berk?",
+            alternativaA: "Fúria da Noite",
+            alternativaB: "Morte Vermelha",
+            alternativaC: "Gronckle",
+            alternativaD: "Pesadelo Monstruoso",
+            alternativaCorreta: "alternativaB"
+        },
+
+        {
+            pergunta: "Quem é o vilão do segundo filme, que controla dragões para formar um exército?",
+            alternativaA: "Drago Bludvist",
+            alternativaB: "Grimmel",
+            alternativaC: "Morte Vermelha",
+            alternativaD: "Valka",
+            alternativaCorreta: "alternativaA"
+        },
+
+        {
+            pergunta: "Qual tipo de dragão o vilão Grimmel caça no terceiro filme?",
+            alternativaA: "Gronckle",
+            alternativaB: "Nadder Mortal",
+            alternativaC: "Fúria da Noite",
+            alternativaD: "Pesadelo Monstruoso",
+            alternativaCorreta: "alternativaC"
+        },
+
+        {
+            pergunta: "O que o Soluço constrói para o Banguela voltar a voar?",
+            alternativaA: "Um par de asas novas",
+            alternativaB: "Uma gaiola de ferro",
+            alternativaC: "Uma capa à prova de fogo",
+            alternativaD: "Uma prótese para a cauda",
+            alternativaCorreta: "alternativaD"
+        },
+
+        {
+            pergunta: "O que acontece com o pai do Soluço no segundo filme?",
+            alternativaA: "Ele abandona Berk",
+            alternativaB: "Ele morre protegendo o Soluço",
+            alternativaC: "Ele é capturado por Drago",
+            alternativaD: "Ele vira o líder dos dragões",
+            alternativaCorreta: "alternativaB"
+        },
+
+        {
+            pergunta: "Por que o Soluço decide deixar os dragões irem para o Mundo Secreto?",
+            alternativaA: "Porque Berk ficou sem comida",
+            alternativaB: "Porque o Banguela queria viver sozinho",
+            alternativaC: "Para proteger os dragões dos humanos que querem capturá-los",
+            alternativaD: "Para fugir de um vulcão",
+            alternativaCorreta: "alternativaC"
+        },
+
+        {
+            pergunta: "O que o Soluço perde no final do primeiro filme?",
+            alternativaA: "Parte de uma perna",
+            alternativaB: "Um braço",
+            alternativaC: "A voz",
+            alternativaD: "A visão",
+            alternativaCorreta: "alternativaA"
+        }
+
+    ]
+    // variáveis globais    
+    let numeroDaQuestaoAtual = 0
+    let pontuacaoFinal = 0
+    let tentativaIncorreta = 0
+    let certas = 0
+    let erradas = 0
+    let quantidadeDeQuestoes = listaDeQuestoes.length
+    // let isUltima = numeroDaQuestaoAtual == quantidadeDeQuestoes-1 ? true : false
+
+    function onloadEsconder() {
+        document.getElementById('jogo').style.display = "none"
+    }
+
+    function iniciarQuiz() {
+        document.getElementById('jogo').style.display = "flex"
+        document.getElementById('btnIniciarQuiz').style.display = "none"
+
+        document.getElementById('qtdQuestoes').innerHTML = quantidadeDeQuestoes
+
+        preencherHTMLcomQuestaoAtual(0)
+
+        btnSubmeter.disabled = false
+        btnProx.disabled = true
+        // btnConcluir.disabled = true
+        btnTentarNovamente.disabled = true
+    }
+
+    function preencherHTMLcomQuestaoAtual(index) {
+        habilitarAlternativas(true)
+        const questaoAtual = listaDeQuestoes[index]
+        numeroDaQuestaoAtual = index
+        console.log("questaoAtual")
+        console.log(questaoAtual)
+        document.getElementById("spanNumeroDaQuestaoAtual").innerHTML = Number(index) + 1 // ajustando porque o index começa em 0
+        document.getElementById("spanQuestaoExibida").innerHTML = questaoAtual.pergunta;
+        document.getElementById("labelOpcaoUm").innerHTML = questaoAtual.alternativaA;
+        document.getElementById("labelOpcaoDois").innerHTML = questaoAtual.alternativaB;
+        document.getElementById("labelOpcaoTres").innerHTML = questaoAtual.alternativaC;
+        document.getElementById("labelOpcaoQuatro").innerHTML = questaoAtual.alternativaD;
+    }
+
+    function submeter() {
+        const options = document.getElementsByName("option"); // recupera alternativas no html
+
+        let hasChecked = false
+        for (let i = 0; i < options.length; i++) {
+            if (options[i].checked) {
+                hasChecked = true
+                break
+            }
+        }
+
+        if (!hasChecked) {
+            alert("Não há alternativas escolhidas. Escolha uma opção.")
+        } else {
+            btnSubmeter.disabled = true
+            btnProx.disabled = false
+
+            habilitarAlternativas(false)
+
+            checarResposta()
+        }
+    }
+
+    function habilitarAlternativas(trueOrFalse) {
+        let opcaoEscolhida = trueOrFalse ? false : true
+
+        primeiraOpcao.disabled = opcaoEscolhida
+        segundaOpcao.disabled = opcaoEscolhida
+        terceiraOpcao.disabled = opcaoEscolhida
+        quartaOpcao.disabled = opcaoEscolhida
+
+    }
+
+    function avancar() {
+        btnProx.disabled = true
+        btnSubmeter.disabled = false
+
+        desmarcarRadioButtons()
+
+        if (numeroDaQuestaoAtual < quantidadeDeQuestoes - 1) {
+            preencherHTMLcomQuestaoAtual(numeroDaQuestaoAtual)
+        } else if (numeroDaQuestaoAtual == quantidadeDeQuestoes - 1) {
+            alert("Atenção... a próxima é a ultima questão!")
+            preencherHTMLcomQuestaoAtual(numeroDaQuestaoAtual)
+        } else {
+            finalizarJogo()
+        }
+        limparCoresBackgroundOpcoes()
+    }
+
+    function tentarNovamente() {
+        // atualiza a página
+        window.location.reload()
+    }
+
+    function checarResposta() {
+        const questaoAtual = listaDeQuestoes[numeroDaQuestaoAtual] // questão atual 
+        const respostaQuestaoAtual = questaoAtual.alternativaCorreta // qual é a resposta correta da questão atual
+
+        const options = document.getElementsByName("option"); // recupera alternativas no html
+
+        let alternativaCorreta = null // variável para armazenar a alternativa correta
+
+        options.forEach((option) => {
+            if (option.value === respostaQuestaoAtual) {
+                console.log("alternativaCorreta está no componente: " + alternativaCorreta)
+                alternativaCorreta = option.labels[0].id
+            }
+        })
+
+        // verifica se resposta assinalada é correta
+        options.forEach((option) => {
+            if (option.checked === true && option.value === respostaQuestaoAtual) {
+                document.getElementById(alternativaCorreta).classList.add("text-success-with-bg")
+                pontuacaoFinal++
+                certas++
+                numeroDaQuestaoAtual++
+            } else if (option.checked && option.value !== respostaQuestaoAtual) {
+                const wrongLabelId = option.labels[0].id
+
+                document.getElementById(wrongLabelId).classList.add("text-danger-with-bg")
+                document.getElementById(alternativaCorreta).classList.add("text-success-with-bg")
+                tentativaIncorreta++
+                erradas++
+                numeroDaQuestaoAtual++
+            }
+        })
+    }
+
+    function limparCoresBackgroundOpcoes() {
+        const options = document.getElementsByName("option");
+        options.forEach((option) => {
+            document.getElementById(option.labels[0].id).classList.remove("text-danger-with-bg")
+            document.getElementById(option.labels[0].id).classList.remove("text-success-with-bg")
+        })
+    }
+
+    function desmarcarRadioButtons() {
+        const options = document.getElementsByName("option");
+        for (let i = 0; i < options.length; i++) {
+            options[i].checked = false;
+        }
+    }
+
+    function finalizarJogo() {
+        document.getElementById('jogo').classList.add("text-new-gray")
+
+        btnProx.disabled = true
+        btnSubmeter.disabled = true
+        btnTentarNovamente.disabled = false
+        btnTentarNovamente.style.display = "block"
+        
+        if (sessionStorage.ID_USUARIO == undefined) {
+            areaResultado.innerHTML = `Quiz finalizado! Para ver seu desempenho, <a href="login.html">faça login</a> ou <a href="cadastro.html">cadastre-se</a>.`
+        } else {
+            fetch("/historico/salvar", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    idUsuarioServer: sessionStorage.ID_USUARIO,
+                    acertosServer: certas,
+                    errosServer: erradas
+                })
+            }).then(function (resposta) {
+                if (resposta.ok) {
+                    areaResultado.innerHTML = `Quiz finalizado! <a href="dashboard.html">Veja seu desempenho na dashboard</a>.`
+                } else {
+                    areaResultado.innerHTML = "Não foi possível salvar seu resultado."
+                }
+            }).catch(function (erro) {
+                console.log(erro)
+            })
+        }
+    }
+</script>
+
 </html>
