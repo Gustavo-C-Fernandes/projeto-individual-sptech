@@ -34,6 +34,8 @@ header {
     width: auto;
 }
 
+/* OBS: bloco .header-logout removido - restaurado ao estado original conforme solicitado */
+
 /* Menu de Navegação */
 nav ul {
     display: flex;
@@ -350,6 +352,59 @@ nav a.active {
     margin-top: 40px;
     font-size: 0.9rem;
     color: #888888;
+}
+
+.ods {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 24px;
+    background-color: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 12px;
+    color: #f2f2f2;
+}
+
+.ods-selo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 140px;
+    height: 140px;
+    background-color: #56c02b;
+    border-radius: 12px;
+    color: #ffffff;
+    text-align: center;
+}
+
+.ods-numero {
+    font-size: 48px;
+    font-weight: bold;
+}
+
+.ods-nome {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.ods-texto h2 {
+    margin: 0 0 12px 0;
+    color: red;
+}
+
+.ods-texto p {
+    margin: 0;
+    line-height: 1.6;
+}
+
+@media (max-width: 700px) {
+    .ods {
+        flex-direction: column;
+        text-align: center;
+    }
 }
 
 /* ========= DASHBOARD ========== */
